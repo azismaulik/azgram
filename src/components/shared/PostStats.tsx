@@ -88,6 +88,17 @@ const PostStats = ({ post, userId }: PostStatsProps) => {
           className="cursor-pointer"
         />
         <p className="small-medium lg:base-medium">{likes.length}</p>
+
+        <img
+          src="/assets/icons/comment.svg"
+          alt="comment"
+          className="cursor-pointer ml-4 w-5"
+        />
+        <img
+          src="/assets/icons/share.svg"
+          alt="share"
+          className="cursor-pointer ml-2"
+        />
       </div>
 
       <div className="flex gap-2">

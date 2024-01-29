@@ -1,15 +1,14 @@
 import { useGetCurrentUser, useGetUserById } from "@/lib/react-query/queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const Profile = () => {
   const { id } = useParams();
   const { data: user } = useGetUserById(id as string);
   const { data: currentUser } = useGetCurrentUser();
-  const { pathname } = useLocation();
 
   return (
-    <div className="home-container">
+    <div className="profile-container">
       <div className="flex gap-8 items-center">
         <div className="w-28 h-28 relative group">
           <img
@@ -18,7 +17,7 @@ const Profile = () => {
             className="w-full h-full rounded-full"
           />
           {id === currentUser?.$id && (
-            <div className="absolute bottom-0 right-0 left-0 top-0">
+            <div className="absolute bottom-0 right-0 left-0 top-0 cursor-pointer">
               <div className="flex-center w-full h-full bg-black/50 rounded-full invisible group-hover:visible">
                 <img
                   src="/assets/icons/edit.svg"
@@ -35,7 +34,8 @@ const Profile = () => {
           <p className="small-regular text-neutral-500">@{user?.username}</p>
         </div>
       </div>
-      <Tabs defaultValue="Post" className="mt-16 w-full">
+      <p className="text-sm">{user?.bio || "no bio yet."}</p>
+      <Tabs defaultValue="Post" className="w-full">
         <TabsList className="grid w-full grid-cols-3 gap-2 bg-neutral-950">
           <TabsTrigger value="Post">Post</TabsTrigger>
           <TabsTrigger value="Saved">Saved</TabsTrigger>
@@ -45,7 +45,11 @@ const Profile = () => {
           <div className="grid grid-cols-3">
             {user?.posts?.map((post: any, index: number) => (
               <Link to={`/posts/${post.$id}`} key={index}>
-                <img src={post.imageUrl} alt="" />
+                <img
+                  className="aspect-square object-cover"
+                  src={post.imageUrl}
+                  alt=""
+                />
               </Link>
             ))}
           </div>
@@ -54,7 +58,11 @@ const Profile = () => {
           <div className="grid grid-cols-3 gap-2">
             {user?.save?.map((post: any, index: number) => (
               <Link to={`/posts/${post.post.$id}`} key={index}>
-                <img src={post.post.imageUrl} alt="" />
+                <img
+                  className="aspect-square object-cover"
+                  src={post.post.imageUrl}
+                  alt=""
+                />
               </Link>
             ))}
           </div>
@@ -63,7 +71,11 @@ const Profile = () => {
           <div className="grid grid-cols-3 gap-2">
             {user?.liked?.map((post: any, index: number) => (
               <Link to={`/posts/${post.$id}`} key={index}>
-                <img src={post.imageUrl} alt="" />
+                <img
+                  className="aspect-square object-cover"
+                  src={post.imageUrl}
+                  alt=""
+                />
               </Link>
             ))}
           </div>

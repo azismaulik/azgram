@@ -154,15 +154,15 @@
   }
 
   .post_details-card {
-    @apply bg-dark-2 w-full max-w-5xl rounded-xl flex-col flex xl:flex-row border border-dark-4 xl:rounded-l-[24px];
+    @apply bg-dark-2 w-full max-w-5xl rounded flex-col flex xl:flex-row border border-dark-4 xl:rounded-lg;
   }
 
   .post_details-img {
-    @apply xl:w-1/2 rounded-t-xl xl:rounded-l-[24px] xl:rounded-tr-none;
+    @apply xl:w-1/2 xl:rounded-lg xl:rounded-tr-none;
   }
 
   .post_details-info {
-    @apply bg-dark-2 flex flex-col gap-5 lg:gap-7 flex-1 items-start p-8 rounded-[30px];
+    @apply bg-dark-2 flex flex-col gap-5 lg:gap-7 flex-1 items-start p-4 sm:p-8 rounded-[30px] mt-4 sm:mt-0
   }
 
   .post_details-delete_btn {
@@ -171,7 +171,7 @@
 
   /* Profile */
   .profile-container {
-    @apply flex flex-col items-center flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar;
+    @apply flex flex-col flex-1 gap-10 overflow-scroll py-10 px-5 md:p-14 custom-scrollbar;
   }
 
   .profile-inner_container {
@@ -224,7 +224,7 @@
   }
 
   .leftsidebar-link {
-    @apply rounded-lg base-medium hover:bg-primary-500 transition;
+    @apply rounded-l-lg base-medium hover:bg-primary-500 transition;
   }
 
   /* Post Card */

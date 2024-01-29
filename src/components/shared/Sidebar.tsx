@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { useSignOutAccount } from "@/lib/react-query/queries";
@@ -48,13 +48,11 @@ const Sidebar = () => {
               <li
                 key={link.label}
                 className={`leftsidebar-link group ${
-                  isActive ? "bg-primary-500" : ""
-                }`}
-              >
+                  isActive && "bg-neutral-900 border-r-[3px] border-primary-500"
+                }`}>
                 <NavLink
                   to={link.route}
-                  className="flex gap-4 items-center p-3"
-                >
+                  className="flex gap-4 items-center p-3">
                   <img
                     src={link.imgURL}
                     alt={link.label}
@@ -72,8 +70,7 @@ const Sidebar = () => {
 
       <Button
         className="flex gap-4 justify-start p-3 group hover:bg-primary-500"
-        onClick={() => signOut()}
-      >
+        onClick={() => signOut()}>
         <img
           src="/assets/icons/logout.svg"
           alt="logout"

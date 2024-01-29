@@ -43,8 +43,7 @@ const PostCard = ({ post }: PostCardProps) => {
 
         <Link
           to={`/update-post/${post.$id}`}
-          className={`${user.id !== post.creator.$id && "hidden"}`}
-        >
+          className={`${user.id !== post.creator.$id && "hidden"}`}>
           <img
             src={"/assets/icons/edit.svg"}
             alt="edit"
@@ -62,18 +61,13 @@ const PostCard = ({ post }: PostCardProps) => {
         />
         <div className="small-medium lg:base-medium pb-3">
           <p>{post.caption}</p>
-          {post.tags.length > 1 && (
-            <ul className="flex gap-1">
-              {post.tags.map((tag: string, index: string) => (
-                <li
-                  key={`${tag}${index}`}
-                  className="text-light-3 small-regular"
-                >
-                  #{tag}
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul className="flex gap-1 mt-4">
+            {post.tags.map((tag: string, index: string) => (
+              <li key={`${tag}${index}`} className="text-light-3 small-regular">
+                #{tag}
+              </li>
+            ))}
+          </ul>
         </div>
       </Link>
 
