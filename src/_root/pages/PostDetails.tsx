@@ -27,6 +27,8 @@ const PostDetails = () => {
     (userPost) => userPost.$id !== id
   );
 
+  console.log(post);
+
   const handleDeletePost = () => {
     deletePost({ postId: id, imageId: post?.imageId });
     navigate(-1);
@@ -38,7 +40,8 @@ const PostDetails = () => {
         <Button
           onClick={() => navigate(-1)}
           variant="ghost"
-          className="shad-button_ghost">
+          className="shad-button_ghost"
+        >
           <img
             src={"/assets/icons/back.svg"}
             alt="back"
@@ -63,7 +66,8 @@ const PostDetails = () => {
             <div className="flex-between w-full">
               <Link
                 to={`/profile/${post?.creator.$id}`}
-                className="flex items-center gap-3">
+                className="flex items-center gap-3"
+              >
                 <img
                   src={
                     post?.creator.imageUrl ||
@@ -72,7 +76,7 @@ const PostDetails = () => {
                   alt="creator"
                   className="w-8 h-8 lg:w-12 lg:h-12 rounded-full"
                 />
-                <div className="flex gap-1 flex-col">
+                <div className="flex flex-col">
                   <p className="base-medium lg:body-bold text-light-1">
                     {post?.creator.name}
                   </p>
@@ -80,7 +84,7 @@ const PostDetails = () => {
                     <p className="subtle-semibold lg:small-regular ">
                       {multiFormatDateString(post?.$createdAt)}
                     </p>
-                    •
+                    {post?.location && "•"}
                     <p className="subtle-semibold lg:small-regular">
                       {post?.location}
                     </p>
@@ -88,10 +92,11 @@ const PostDetails = () => {
                 </div>
               </Link>
 
-              <div className="flex-center gap-4">
+              <div className="flex-center">
                 <Link
                   to={`/update-post/${post?.$id}`}
-                  className={`${user.id !== post?.creator.$id && "hidden"}`}>
+                  className={`${user.id !== post?.creator.$id && "hidden"}`}
+                >
                   <img
                     src={"/assets/icons/edit.svg"}
                     alt="edit"
@@ -105,7 +110,8 @@ const PostDetails = () => {
                   variant="ghost"
                   className={`ost_details-delete_btn ${
                     user.id !== post?.creator.$id && "hidden"
-                  }`}>
+                  }`}
+                >
                   <img
                     src={"/assets/icons/delete.svg"}
                     alt="delete"
@@ -116,19 +122,20 @@ const PostDetails = () => {
               </div>
             </div>
 
-            <hr className="border w-full border-dark-4/80" />
-
             <div className="flex flex-col flex-1 w-full small-medium lg:base-regular">
               <p>{post?.caption}</p>
-              <ul className="flex gap-1 mt-2">
-                {post?.tags.map((tag: string, index: string) => (
-                  <li
-                    key={`${tag}${index}`}
-                    className="text-light-3 small-regular">
-                    #{tag}
-                  </li>
-                ))}
-              </ul>
+              {post?.tags.length > 1 && (
+                <ul className="flex gap-1 mt-2">
+                  {post?.tags.map((tag: string, index: string) => (
+                    <li
+                      key={`${tag}${index}`}
+                      className="text-light-3 small-regular"
+                    >
+                      #{tag}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <div className="w-full">
@@ -139,8 +146,6 @@ const PostDetails = () => {
       )}
 
       <div className="w-full max-w-5xl">
-        <hr className="border w-full border-dark-4/80" />
-
         <h3 className="body-bold md:h3-bold w-full my-10">
           More Related Posts
         </h3>

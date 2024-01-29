@@ -1,34 +1,73 @@
-import { useGetCurrentUser } from "@/lib/react-query/queries";
-import React from "react";
+import { useGetCurrentUser, useGetUserById } from "@/lib/react-query/queries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 const Profile = () => {
+  const { id } = useParams();
+  const { data: user } = useGetUserById(id as string);
   const { data: currentUser } = useGetCurrentUser();
-  console.log(currentUser);
+  const { pathname } = useLocation();
+
   return (
     <div className="home-container">
       <div className="flex gap-8 items-center">
-        <img
-          src={currentUser?.imageUrl}
-          alt="profile"
-          className="w-28 h-28 rounded-full"
-        />
+        <div className="w-28 h-28 relative group">
+          <img
+            src={user?.imageUrl || "/assets/icons/profile-placeholder.svg"}
+            alt="profile"
+            className="w-full h-full rounded-full"
+          />
+          {id === currentUser?.$id && (
+            <div className="absolute bottom-0 right-0 left-0 top-0">
+              <div className="flex-center w-full h-full bg-black/50 rounded-full invisible group-hover:visible">
+                <img
+                  src="/assets/icons/edit.svg"
+                  alt="camera"
+                  width={24}
+                  height={24}
+                />
+              </div>
+            </div>
+          )}
+        </div>
         <div>
-          <p className="text-xl font-bold">{currentUser?.name}</p>
-          <p className="small-regular text-neutral-500">
-            @{currentUser?.username}
-          </p>
+          <p className="text-xl font-bold">{user?.name}</p>
+          <p className="small-regular text-neutral-500">@{user?.username}</p>
         </div>
       </div>
-      <Tabs defaultValue="account" className="w-[400px]">
-        <TabsList className="grid w-full grid-cols-2 bg-neutral-900">
-          <TabsTrigger defaultChecked className="bg-black" value="account">
-            Account
-          </TabsTrigger>
-          <TabsTrigger value="password">Password</TabsTrigger>
+      <Tabs defaultValue="Post" className="mt-16 w-full">
+        <TabsList className="grid w-full grid-cols-3 gap-2 bg-neutral-950">
+          <TabsTrigger value="Post">Post</TabsTrigger>
+          <TabsTrigger value="Saved">Saved</TabsTrigger>
+          <TabsTrigger value="Liked">Liked</TabsTrigger>
         </TabsList>
-        <TabsContent value="account">Tab 1</TabsContent>
-        <TabsContent value="password">Tab 2</TabsContent>
+        <TabsContent value="Post">
+          <div className="grid grid-cols-3">
+            {user?.posts?.map((post: any, index: number) => (
+              <Link to={`/posts/${post.$id}`} key={index}>
+                <img src={post.imageUrl} alt="" />
+              </Link>
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent value="Saved">
+          <div className="grid grid-cols-3 gap-2">
+            {user?.save?.map((post: any, index: number) => (
+              <Link to={`/posts/${post.post.$id}`} key={index}>
+                <img src={post.post.imageUrl} alt="" />
+              </Link>
+            ))}
+          </div>
+        </TabsContent>
+        <TabsContent value="Liked">
+          <div className="grid grid-cols-3 gap-2">
+            {user?.liked?.map((post: any, index: number) => (
+              <Link to={`/posts/${post.$id}`} key={index}>
+                <img src={post.imageUrl} alt="" />
+              </Link>
+            ))}
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );

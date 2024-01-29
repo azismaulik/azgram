@@ -33,21 +33,18 @@ const PostCard = ({ post }: PostCardProps) => {
             <p className="base-medium lg:body-bold text-light-1">
               {post.creator.name}
             </p>
-            <div className="flex-center gap-2 text-light-3">
-              <p className="subtle-semibold lg:small-regular ">
-                {multiFormatDateString(post.$createdAt)}
-              </p>
+            <div className="flex-center gap-2 text-light-3 font-semibold text-xs">
+              <p>{multiFormatDateString(post.$createdAt)}</p>
               {post.location && "•"}
-              <p className="subtle-semibold lg:small-regular">
-                {post.location}
-              </p>
+              <p>{post.location}</p>
             </div>
           </div>
         </div>
 
         <Link
           to={`/update-post/${post.$id}`}
-          className={`${user.id !== post.creator.$id && "hidden"}`}>
+          className={`${user.id !== post.creator.$id && "hidden"}`}
+        >
           <img
             src={"/assets/icons/edit.svg"}
             alt="edit"
@@ -61,16 +58,17 @@ const PostCard = ({ post }: PostCardProps) => {
         <img
           src={post.imageUrl || "/assets/icons/profile-placeholder.svg"}
           alt="post image"
-          className="post-card_img mt-4"
+          className="post-card_img mt-6"
         />
-        <div className="small-medium lg:base-medium py-3">
+        <div className="small-medium lg:base-medium pb-3">
           <p>{post.caption}</p>
           {post.tags.length > 1 && (
             <ul className="flex gap-1">
               {post.tags.map((tag: string, index: string) => (
                 <li
                   key={`${tag}${index}`}
-                  className="text-light-3 small-regular">
+                  className="text-light-3 small-regular"
+                >
                   #{tag}
                 </li>
               ))}

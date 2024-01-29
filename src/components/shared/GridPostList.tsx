@@ -31,7 +31,7 @@ const GridPostList = ({
 
           <div className="grid-post_user">
             {showUser && (
-              <div className="hidden sm:flex items-center justify-start gap-2 flex-1">
+              <div className="hidden lg:flex items-center justify-start gap-2 flex-1">
                 <img
                   src={
                     post.creator.imageUrl ||

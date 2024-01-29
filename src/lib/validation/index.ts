@@ -35,5 +35,8 @@ export const ProfileValidation = z.object({
 // POST
 // ============================================================
 export const PostValidation = z.object({
+  caption: z.string(),
+  location: z.string(),
+  tags: z.string(),
   file: z.custom<File[]>(),
 });

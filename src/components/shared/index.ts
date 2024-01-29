@@ -1,5 +1,5 @@
 export { default as BottomBar } from "./BottomBar";
-export { default as LeftSidebar } from "./Sidebar";
+export { default as Sidebar } from "./Sidebar";
 export { default as Loader } from "./Loader";
 export { default as PostCard } from "./PostCard";
 export { default as GridPostList } from "./GridPostList";
