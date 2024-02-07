@@ -19,7 +19,7 @@ const GridPostList = ({
 
   return (
     <ul className="grid grid-cols-2 md:grid-cols-3 gap-4">
-      {posts.map((post) => (
+      {posts?.map((post) => (
         <li key={post.$id} className="relative">
           <Link to={`/posts/${post.$id}`} className="grid-post_link">
             <img

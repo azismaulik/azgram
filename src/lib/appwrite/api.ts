@@ -197,9 +197,9 @@ export function getFilePreview(fileId: string) {
 }
 
 // ============================== DELETE FILE
-export async function deleteFile(fileId: string) {
+export async function deleteFile(imageId: string) {
   try {
-    await storage.deleteFile(appwriteConfig.storageId, fileId);
+    await storage.deleteFile(appwriteConfig.storageId, imageId);
 
     return { status: "ok" };
   } catch (error) {
@@ -330,8 +330,8 @@ export async function updatePost(post: IUpdatePost) {
 }
 
 // ============================== DELETE POST
-export async function deletePost(postId?: string) {
-  if (!postId) return;
+export async function deletePost(postId?: string, imageId?: string) {
+  if (!postId || !imageId) return;
 
   try {
     const statusCode = await databases.deleteDocument(
@@ -342,9 +342,9 @@ export async function deletePost(postId?: string) {
 
     if (!statusCode) throw Error;
 
-    await deleteFile(postId);
+    await deleteFile(imageId);
 
-    return { status: "Ok" };
+    return { status: "ok" };
   } catch (error) {
     console.log(error);
   }

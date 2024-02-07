@@ -11,6 +11,7 @@ import {
 } from "@/lib/react-query/queries";
 import { multiFormatDateString } from "@/lib/utils";
 import { useUserContext } from "@/context/AuthContext";
+import { useState } from "react";
 
 const PostDetails = () => {
   const navigate = useNavigate();
@@ -23,16 +24,33 @@ const PostDetails = () => {
   );
   const { mutate: deletePost } = useDeletePost();
 
+  const [deleting, setDeleting] = useState(false);
+
   const relatedPosts = userPosts?.documents.filter(
     (userPost) => userPost.$id !== id
   );
 
-  console.log(post);
-
   const handleDeletePost = () => {
-    deletePost({ postId: id });
-    navigate(-1);
+    deletePost({ postId: id, imageId: post?.imageId });
+    setDeleting(true);
+
+    setTimeout(() => {
+      navigate(-1);
+    }, 3000);
   };
+
+  if (deleting) {
+    return (
+      <div className="flex-center w-full h-full">
+        <div>
+          <Loader />
+          <p className="text-light-1 mt-4 text-center w-full">
+            Deleting post...
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="post_details-container">
@@ -40,7 +58,8 @@ const PostDetails = () => {
         <Button
           onClick={() => navigate(-1)}
           variant="ghost"
-          className="shad-button_ghost">
+          className="shad-button_ghost"
+        >
           <img
             src={"/assets/icons/back.svg"}
             alt="back"
@@ -81,7 +100,8 @@ const PostDetails = () => {
             <div className="flex-between w-full">
               <Link
                 to={`/profile/${post?.creator.$id}`}
-                className="flex items-center gap-3">
+                className="flex items-center gap-3"
+              >
                 <img
                   src={
                     post?.creator.imageUrl ||
@@ -112,7 +132,8 @@ const PostDetails = () => {
               <div className="flex-center">
                 <Link
                   to={`/update-post/${post?.$id}`}
-                  className={`${user.id !== post?.creator.$id && "hidden"}`}>
+                  className={`${user.id !== post?.creator.$id && "hidden"}`}
+                >
                   <img
                     src={"/assets/icons/edit.svg"}
                     alt="edit"
@@ -126,7 +147,8 @@ const PostDetails = () => {
                   variant="ghost"
                   className={`ost_details-delete_btn ${
                     user.id !== post?.creator.$id && "hidden"
-                  }`}>
+                  }`}
+                >
                   <img
                     src={"/assets/icons/delete.svg"}
                     alt="delete"
@@ -143,7 +165,8 @@ const PostDetails = () => {
                   {post?.tags.map((tag: string, index: string) => (
                     <li
                       key={`${tag}${index}`}
-                      className="text-light-3 small-regular">
+                      className="text-light-3 small-regular"
+                    >
                       #{tag}
                     </li>
                   ))}

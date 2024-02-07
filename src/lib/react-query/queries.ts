@@ -64,11 +64,11 @@ export const useGetPosts = () => {
       if (lastPage && lastPage.documents.length === 0) {
         return null;
       }
-
       // Use the $id of the last document as the cursor.
       const lastId = lastPage?.documents[lastPage.documents.length - 1].$id;
-      return lastId;
+      return lastId ? parseInt(lastId) : null; // Convert to number if lastId is a string representing a number
     },
+    initialPageParam: 0, // Set initialPageParam to start pagination from the first page
   });
 };
 
@@ -130,7 +130,8 @@ export const useUpdatePost = () => {
 export const useDeletePost = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ postId }: { postId?: string }) => deletePost(postId),
+    mutationFn: ({ postId, imageId }: { postId?: string; imageId?: string }) =>
+      deletePost(postId, imageId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
